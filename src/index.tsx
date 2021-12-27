@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import App from "./App";
 import { theme } from "./theme";
 import { ReactQueryDevtools } from 'react-query/devtools'
+import 'bootstrap/dist/css/bootstrap.css';
 const queryClient = new QueryClient();
 
 ReactDOM.render(

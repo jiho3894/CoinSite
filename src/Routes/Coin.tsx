@@ -12,20 +12,25 @@ import styled from "styled-components";
 import { infoData, priceData } from "../Api";
 import Chart from "./Chart";
 import Price from "./Price";
+import { Button } from "react-bootstrap";
 
 const Container = styled.div`
   padding: 0px 20px;
   width: 480px;
   margin: 0 auto;
+  @media screen and (max-width: 769px) {
+    max-width: 100%;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 48px;
   color: ${(props) => props.theme.accentColor};
-  height: 15vh;
+  height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: 600;
 `;
 
 const Overview = styled.div`
@@ -35,6 +40,7 @@ const Overview = styled.div`
   padding: 10px;
   border-radius: 10px;
 `;
+
 const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
@@ -77,9 +83,15 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
+const BtnContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 interface RouteState {
   state: {
     name: string;
+    links : string;
   };
 }
 
@@ -104,6 +116,9 @@ interface InfoData {
   hash_algorithm: string;
   first_data_at: string;
   last_data_at: string;
+  links : {
+    youtube : string;
+  }
 }
 
 interface PriceData {
@@ -171,9 +186,13 @@ const Coin = () => {
       setLoding(false);
     })();
   }, [coinId]); */
-  console.log(price?.quotes.USD.price);
   return (
     <Container>
+      <BtnContainer>
+        <Link to="/">
+          <Button variant="info">Back</Button>
+        </Link>
+      </BtnContainer>
       <Title>{state?.name || "Nothing"}</Title>
       {infoLoding || priceLoding ? (
         <Loader>Loading...</Loader>
@@ -196,7 +215,7 @@ const Coin = () => {
               <span>{price?.quotes.USD.price.toFixed(2)}$</span>
             </OverviewItem>
           </Overview>
-          <Description>{info?.description}</Description>
+          <Description>{info?.description ? info?.description.slice(0,200) : info?.description}</Description>
           <Overview>
             <OverviewItem>
               <span>Total Suply:</span>
@@ -215,13 +234,13 @@ const Coin = () => {
             </Tab>
             <Tab isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`} state={{ name: state.name }}>
-                Price
+                Price & YouTube
               </Link>
             </Tab>
           </Tabs>
           <Routes>
             <Route path="chart" element={<Chart coinId={coinId} />} />
-            <Route path="price" element={<Price />} />
+            <Route path="price" element={<Price coinId={coinId}/>} />
           </Routes>
         </>
       )}

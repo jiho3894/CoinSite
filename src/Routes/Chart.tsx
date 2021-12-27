@@ -18,7 +18,7 @@ interface Ihistory {
 }
 
 const Chart = ({ coinId }: CoinChart) => {
-  const { isLoading, data } = useQuery<Ihistory[]>(["history", coinId], () =>
+  const { isLoading, data } = useQuery<Ihistory[]>(["coinHistory", coinId], () =>
     fetchCoinHistory(coinId)
   );
   return (

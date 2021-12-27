@@ -2,12 +2,18 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchData } from "../Api";
-import {Helmet} from 'react-helmet';
+import { Helmet } from "react-helmet";
+import { useState } from "react";
+import { Button } from "react-bootstrap";
 
 const Container = styled.div`
   padding: 0px 20px;
   max-width: 480px;
   margin: 0 auto;
+  @media screen and (max-width: 769px) {
+    max-width: 100%;
+    padding: 0px;
+  }
 `;
 
 const Title = styled.h1`
@@ -17,6 +23,10 @@ const Title = styled.h1`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: 500;
+  @media screen and (max-width: 769px) {
+    font-size: 25px;
+  }
 `;
 
 const Loader = styled.span`
@@ -24,7 +34,9 @@ const Loader = styled.span`
   display: block;
 `;
 
-const CoinList = styled.ul``;
+const CoinList = styled.ul`
+  margin-right: 2rem;
+`;
 
 const Img = styled.img`
   width: 35px;
@@ -61,7 +73,7 @@ interface CoinInterface {
 }
 
 const Coins = () => {
-  const {isLoading,data} = useQuery<CoinInterface[]>("allCoin", fetchData);
+  const { isLoading, data } = useQuery<CoinInterface[]>("allCoin", fetchData);
   /* const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoding] = useState(true);
   useEffect(() => {
@@ -73,17 +85,23 @@ const Coins = () => {
     })();
   }, []);
   console.log(coins); */
+  const [counter, setCounter] = useState(30);
+  const onClick = () => {
+    setCounter(counter + 30);
+  };
   return (
     <Container>
       <Helmet>
-        <title>CoinChart</title>
+        <title>나락의 지름길</title>
       </Helmet>
-      <Title>Coins</Title>
+      <Link to="/">
+        <Title>나락 지름길 리스트</Title>
+      </Link>
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <CoinList>
-          {data?.slice(0,10).map((coin) => (
+          {data?.slice(0, counter).map((coin) => (
             <Coin>
               <Link to={`/${coin.id}`} state={{ name: coin.name }}>
                 <Img
@@ -94,6 +112,11 @@ const Coins = () => {
               </Link>
             </Coin>
           ))}
+          <div className="d-grid gap-2" onClick={onClick}>
+            <Button variant="secondary" size="lg">
+              Add List View
+            </Button>
+          </div>
         </CoinList>
       )}
     </Container>
