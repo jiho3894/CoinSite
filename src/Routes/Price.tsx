@@ -1,6 +1,5 @@
 import ReactPlayer from "react-player";
 import { useQuery } from "react-query";
-import YouTube from "react-youtube";
 import { priceHistory } from "../Api";
 
 interface CoinChart {
