@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchData } from "../Api";
+import {Helmet} from 'react-helmet';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -74,6 +75,9 @@ const Coins = () => {
   console.log(coins); */
   return (
     <Container>
+      <Helmet>
+        <title>CoinChart</title>
+      </Helmet>
       <Title>Coins</Title>
       {isLoading ? (
         <Loader>Loading...</Loader>

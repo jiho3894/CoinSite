@@ -1,6 +1,13 @@
+import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { Route, Routes, useLocation, useMatch, useParams } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useMatch,
+  useParams,
+} from "react-router-dom";
 import styled from "styled-components";
 import { infoData, priceData } from "../Api";
 import Chart from "./Chart";
@@ -23,9 +30,9 @@ const Title = styled.h1`
 
 const Overview = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
+  padding: 10px;
   border-radius: 10px;
 `;
 const OverviewItem = styled.div`
@@ -137,8 +144,17 @@ const Coin = () => {
   const { state } = useLocation() as RouteState;
   const priceMatch = useMatch(`${coinId}/price`);
   const chartMatch = useMatch(`${coinId}/chart`);
-  const {isLoading : infoLoding, data : info} = useQuery<InfoData>(["info",coinId] , () => infoData(coinId));
-  const {isLoading : priceLoding, data : price} = useQuery<PriceData>(["price",coinId] , () => priceData(coinId));
+  const { isLoading: infoLoding, data: info } = useQuery<InfoData>(
+    ["info", coinId],
+    () => infoData(coinId),
+    {
+      refetchInterval: 5000,
+    }
+  );
+  const { isLoading: priceLoding, data: price } = useQuery<PriceData>(
+    ["price", coinId],
+    () => priceData(coinId)
+  );
   /* const [loading, setLoding] = useState(true);
   const [info, setInfo] = useState<InfoData>();
   const [price, setPrice] = useState<PriceData>(); */
@@ -155,6 +171,7 @@ const Coin = () => {
       setLoding(false);
     })();
   }, [coinId]); */
+  console.log(price?.quotes.USD.price);
   return (
     <Container>
       <Title>{state?.name || "Nothing"}</Title>
@@ -162,6 +179,9 @@ const Coin = () => {
         <Loader>Loading...</Loader>
       ) : (
         <>
+          <Helmet>
+            <title>{state?.name || "Nothing"}</title>
+          </Helmet>
           <Overview>
             <OverviewItem>
               <span>Rank:</span>
@@ -169,11 +189,11 @@ const Coin = () => {
             </OverviewItem>
             <OverviewItem>
               <span>Symbol:</span>
-              <span>${info?.symbol}</span>
+              <span>{info?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{info?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>{price?.quotes.USD.price.toFixed(2)}$</span>
             </OverviewItem>
           </Overview>
           <Description>{info?.description}</Description>
@@ -189,15 +209,19 @@ const Coin = () => {
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`} state={{ name: state.name }}>Chart</Link>
+              <Link to={`/${coinId}/chart`} state={{ name: state.name }}>
+                Chart
+              </Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`} state={{ name: state.name }}>Price</Link>
+              <Link to={`/${coinId}/price`} state={{ name: state.name }}>
+                Price
+              </Link>
             </Tab>
           </Tabs>
           <Routes>
+            <Route path="chart" element={<Chart coinId={coinId} />} />
             <Route path="price" element={<Price />} />
-            <Route path="chart" element={<Chart />} />
           </Routes>
         </>
       )}
