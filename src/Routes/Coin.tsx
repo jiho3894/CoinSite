@@ -91,7 +91,7 @@ const BtnContainer = styled.div`
 interface RouteState {
   state: {
     name: string;
-    links : string;
+    links: string;
   };
 }
 
@@ -116,9 +116,9 @@ interface InfoData {
   hash_algorithm: string;
   first_data_at: string;
   last_data_at: string;
-  links : {
-    youtube : string;
-  }
+  links: {
+    youtube: string;
+  };
 }
 
 interface PriceData {
@@ -154,6 +154,7 @@ interface PriceData {
     };
   };
 }
+
 const Coin = () => {
   const { coinId } = useParams();
   const { state } = useLocation() as RouteState;
@@ -170,22 +171,6 @@ const Coin = () => {
     ["price", coinId],
     () => priceData(coinId)
   );
-  /* const [loading, setLoding] = useState(true);
-  const [info, setInfo] = useState<InfoData>();
-  const [price, setPrice] = useState<PriceData>(); */
-  /* useEffect(() => {
-    (async () => {
-      const infoData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-      ).json();
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
-      setInfo(infoData);
-      setPrice(priceData);
-      setLoding(false);
-    })();
-  }, [coinId]); */
   return (
     <Container>
       <BtnContainer>
@@ -215,7 +200,11 @@ const Coin = () => {
               <span>{price?.quotes.USD.price.toFixed(2)}$</span>
             </OverviewItem>
           </Overview>
-          <Description>{info?.description ? info?.description.slice(0,200) : info?.description}</Description>
+          <Description>
+            {info?.description
+              ? info?.description.slice(0, 200)
+              : info?.description}
+          </Description>
           <Overview>
             <OverviewItem>
               <span>Total Suply:</span>
@@ -240,7 +229,7 @@ const Coin = () => {
           </Tabs>
           <Routes>
             <Route path="chart" element={<Chart coinId={coinId} />} />
-            <Route path="price" element={<Price coinId={coinId}/>} />
+            <Route path="price" element={<Price coinId={coinId} />} />
           </Routes>
         </>
       )}

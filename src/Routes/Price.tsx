@@ -8,13 +8,14 @@ interface CoinChart {
 
 interface YoutubeKey {
   links: {
-    youtube : string;
-  }
+    youtube: string;
+  };
 }
 
 const Price = ({ coinId }: CoinChart) => {
-  const { isLoading, data } = useQuery<YoutubeKey>(["priceHistory", coinId], () =>
-    priceHistory(coinId)
+  const { isLoading, data } = useQuery<YoutubeKey>(
+    ["priceHistory", coinId],
+    () => priceHistory(coinId)
   );
   const key = data?.links.youtube;
   return (
@@ -23,7 +24,11 @@ const Price = ({ coinId }: CoinChart) => {
         "Loading..."
       ) : (
         <div>
-          {key === undefined ? "유튜브 영상이 없습니다." : <ReactPlayer url={key} playing={true} width="inherit"/>}
+          {key === undefined ? (
+            "유튜브 영상이 없습니다."
+          ) : (
+            <ReactPlayer url={key} playing={true} width="inherit" />
+          )}
         </div>
       )}
     </div>

@@ -22,7 +22,6 @@ export const priceHistory = (coinId?: string) => {
   );
 };
 
-
 export const fetchCoinHistory = (coinId?: string) => {
   const endDate = Math.floor(Date.now() / 1000);
   const startDate = endDate - 60 * 60 * 24 * 7;

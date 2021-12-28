@@ -5,6 +5,8 @@ import { fetchData } from "../Api";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -36,6 +38,7 @@ const Loader = styled.span`
 
 const CoinList = styled.ul`
   margin-right: 2rem;
+  list-style: none;
 `;
 
 const Img = styled.img`
@@ -45,9 +48,10 @@ const Img = styled.img`
 `;
 
 const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.cardBgColor};
+  color: ${(props) => props.theme.textColor};
   border-radius: 15px;
+  border: 1px solid ${(props) => props.theme.textColor};
   margin-bottom: 10px;
   a {
     padding: 20px;
@@ -73,18 +77,9 @@ interface CoinInterface {
 }
 
 const Coins = () => {
+  const setDark = useSetRecoilState(isDarkAtom);
+  const setToggle = () => setDark((prev) => !prev);
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoin", fetchData);
-  /* const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoding] = useState(true);
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("https://api.coinpaprika.com/v1/coins");
-      const json = await response.json();
-      setCoins(json.slice(0, 10));
-      setLoding(false);
-    })();
-  }, []);
-  console.log(coins); */
   const [counter, setCounter] = useState(30);
   const onClick = () => {
     setCounter(counter + 30);
@@ -96,6 +91,7 @@ const Coins = () => {
       </Helmet>
       <Link to="/">
         <Title>나락 지름길 리스트</Title>
+        <button onClick={setToggle}>Toggle Mode</button>
       </Link>
       {isLoading ? (
         <Loader>Loading...</Loader>
