@@ -5,7 +5,7 @@ import { fetchData } from "../Api";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
@@ -66,6 +66,16 @@ const Coin = styled.li`
   }
 `;
 
+const ToggleBtnContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const ToggleBtn = styled.button`
+  background-color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.bgColor}
+`;
+
 interface CoinInterface {
   id: string;
   name: string;
@@ -77,11 +87,12 @@ interface CoinInterface {
 }
 
 const Coins = () => {
+  const isDark = useRecoilValue(isDarkAtom);
   const setDark = useSetRecoilState(isDarkAtom);
   const setToggle = () => setDark((prev) => !prev);
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoin", fetchData);
   const [counter, setCounter] = useState(30);
-  const onClick = () => {
+  const onlistAdd = () => {
     setCounter(counter + 30);
   };
   return (
@@ -90,8 +101,12 @@ const Coins = () => {
         <title>나락의 지름길</title>
       </Helmet>
       <Link to="/">
+        <ToggleBtnContainer>
+          <ToggleBtn onClick={setToggle}>
+            {isDark ? "라이트 모드" : "다크 모드"}
+          </ToggleBtn>
+        </ToggleBtnContainer>
         <Title>나락 지름길 리스트</Title>
-        <button onClick={setToggle}>Toggle Mode</button>
       </Link>
       {isLoading ? (
         <Loader>Loading...</Loader>
@@ -108,7 +123,7 @@ const Coins = () => {
               </Link>
             </Coin>
           ))}
-          <div className="d-grid gap-2" onClick={onClick}>
+          <div className="d-grid gap-2" onClick={onlistAdd}>
             <Button variant="secondary" size="lg">
               Add List View
             </Button>
@@ -118,4 +133,5 @@ const Coins = () => {
     </Container>
   );
 };
+
 export default Coins;
