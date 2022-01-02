@@ -97,7 +97,7 @@ const Coins = () => {
     const clientHeight = document.documentElement.clientHeight;
 
     if (scrollTop + clientHeight >= scrollHeight) {
-      setCounter(counter + 200);
+      setCounter(counter + 100);
     }
   };
   useEffect((): ReturnType<EffectCallback> => {

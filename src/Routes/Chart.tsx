@@ -70,7 +70,7 @@ const Chart = ({ coinId }: CoinChart) => {
               axisBorder: {
                 show: false,
               },
-              categories: data?.map((date) => date.time_close.slice(6, 10)),
+              categories: data?.map((date) => date.time_close),
               type: "datetime",
             },
             fill: {

@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin:0;
     border:0;
+    overflow-y: auto;
   }
   body {
     font-family: 'Source Sans Pro', sans-serif;
