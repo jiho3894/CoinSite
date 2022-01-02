@@ -8,6 +8,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
+  overflow-y: auto;
   padding: 0px 20px;
   max-width: 480px;
   margin: 0 auto;
