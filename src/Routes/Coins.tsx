@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchData } from "../Api";
 import { Helmet } from "react-helmet";
-import { useState } from "react";
-import { Button } from "react-bootstrap";
+import { EffectCallback, useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isDarkAtom } from "../atoms";
 
@@ -73,7 +72,7 @@ const ToggleBtnContainer = styled.div`
 
 const ToggleBtn = styled.button`
   background-color: ${(props) => props.theme.textColor};
-  color: ${(props) => props.theme.bgColor}
+  color: ${(props) => props.theme.bgColor};
 `;
 
 interface CoinInterface {
@@ -91,10 +90,22 @@ const Coins = () => {
   const setDark = useSetRecoilState(isDarkAtom);
   const setToggle = () => setDark((prev) => !prev);
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoin", fetchData);
-  const [counter, setCounter] = useState(30);
-  const onlistAdd = () => {
-    setCounter(counter + 30);
+  const [counter, setCounter] = useState(50);
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight) {
+      setCounter(counter + 200);
+    }
   };
+  useEffect((): ReturnType<EffectCallback> => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
   return (
     <Container>
       <Helmet>
@@ -123,11 +134,6 @@ const Coins = () => {
               </Link>
             </Coin>
           ))}
-          <div className="d-grid gap-2" onClick={onlistAdd}>
-            <Button variant="secondary" size="lg">
-              Add List View
-            </Button>
-          </div>
         </CoinList>
       )}
     </Container>
