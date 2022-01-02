@@ -92,7 +92,7 @@ const Coins = () => {
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoin", fetchData);
   const [counter, setCounter] = useState(50);
   const handleScroll = () => {
-    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollHeight = document.body.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
 
