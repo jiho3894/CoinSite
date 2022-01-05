@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { IoMdSunny } from 'react-icons/io';
-import { FaMoon } from 'react-icons/fa';
+import { IoMdSunny } from "react-icons/io";
+import { FaMoon } from "react-icons/fa";
 import { fetchData } from "../Api";
 import { Helmet } from "react-helmet";
-import { EffectCallback, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { isDarkAtom, ThemeEnums } from "../recoil/atoms";
 
@@ -75,6 +75,8 @@ const ToggleBtnContainer = styled.div`
 const ToggleBtn = styled.button`
   background-color: ${(props) => props.theme.textColor};
   color: ${(props) => props.theme.bgColor};
+  width:50px;
+  height: 50px;
 `;
 
 interface CoinInterface {
@@ -94,31 +96,28 @@ const Coins = () => {
   const [counter, setCounter] = useState(50);
   const handleChangeTheme = useCallback((): void => {
     if (theme === DARK) {
-      localStorage.setItem('theme', LIGHT);
+      localStorage.setItem("theme", LIGHT);
       setTheme(LIGHT);
       return;
     }
 
-    localStorage.setItem('theme', DARK);
+    localStorage.setItem("theme", DARK);
     setTheme(DARK);
   }, [DARK, LIGHT, setTheme, theme]);
-  const handleScroll = () => {
-    const scrollHeight = document.body.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
-
-    if (scrollTop + clientHeight >= scrollHeight) {
+  const handleScroll = useCallback((): void => {
+    const { innerHeight } = window;
+    const { scrollHeight } = document.body;
+    const { scrollTop } = document.documentElement;
+    if (Math.round(scrollTop + innerHeight) >= scrollHeight) {
       setCounter(counter + 100);
     }
-  };
-  useEffect((): ReturnType<EffectCallback> => {
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("touchmove", handleScroll);
+  }, [counter]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, true);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("touchmove", handleScroll);
+      window.removeEventListener("scroll", handleScroll, true);
     };
-  });
+  }, [handleScroll]);
   return (
     <Container>
       <Helmet>
@@ -126,17 +125,12 @@ const Coins = () => {
       </Helmet>
       <Link to="/">
         <ToggleBtnContainer>
-          <ToggleBtn >
-          <div
-      className='ToggleTheme'
-      onClick={handleChangeTheme}
-    >
-      {
-        theme === LIGHT ? <FaMoon /> : <IoMdSunny />
-        // 테마가 라이트모드 / 다크모드일때마다 아이콘을 다르게 렌더링 해줍니다.
-        // 취향에 따라 아이콘을 설정해주세요 :)
-      }
-    </div>
+          <ToggleBtn>
+            <div className="ToggleTheme" onClick={handleChangeTheme}>
+              {
+                theme === LIGHT ? <FaMoon /> : <IoMdSunny />
+              }
+            </div>
           </ToggleBtn>
         </ToggleBtnContainer>
         <Title>나락 지름길 리스트</Title>
