@@ -24,7 +24,7 @@ const Show = ({ coinId }: CoinChart) => {
           {key === undefined ? (
             "유튜브 영상이 없습니다."
           ) : (
-            <ReactPlayer url={key} playing={true} width="inherit" />
+            <ReactPlayer url={key} playing={true} width="inherit" height="50vh"/>
           )}
         </div>
       )}

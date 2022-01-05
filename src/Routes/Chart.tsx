@@ -22,69 +22,61 @@ const Chart = ({ coinId }: CoinChart) => {
     ["coinHistory", coinId],
     () => fetchCoinHistory(coinId)
   );
+  console.log(isDark);
   return (
     <>
       {isLoading ? (
         "Loading..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
-              name: coinId,
-              data: data?.map((price) => price.close),
+              name: "Price",
+              data: data?.map((price) => ({
+                x: price.time_close,
+                y: [price.open, price.high, price.low, price.close],
+              })),
             },
           ]}
           options={{
             theme: {
               mode: isDark ? "dark" : "light",
             },
-            grid: {
-              show: false,
-            },
             chart: {
-              width: 600,
-              height: 600,
+              type: "candlestick",
+              height: 900,
               background: "transparent",
-              toolbar: {
-                show: false,
+              foreColor: isDark ? "white" : "black",
+              animations: {
+                enabled: true,
+                easing: "easeinout",
+                speed: 800,
+                animateGradually: {
+                  enabled: true,
+                  delay: 150,
+                },
+                dynamicAnimation: {
+                  enabled: true,
+                  speed: 350,
+                },
               },
             },
-            stroke: {
-              curve: "smooth",
-              width: 3,
+            xaxis: {
+              type: "datetime",
+              labels : {
+                style : {
+                  colors : isDark === "0" ? "white" : "black"
+                }
+              }
             },
             yaxis: {
               show: false,
             },
-            xaxis: {
-              labels: {
-                show: false,
-              },
-              axisTicks: {
-                show: false,
-              },
-              axisBorder: {
-                show: false,
-              },
-              categories: data?.map((date) => date.time_close),
-              type: "datetime",
-            },
-            fill: {
-              type: "gradient",
-              gradient: {
-                gradientToColors: ["#1abc9c"],
-                stops: [0, 100],
-              },
-            },
-            colors: ["#8e44ad"],
-            tooltip: {
-              y: {
-                formatter: (value) => `${value.toFixed(2)}$`,
-              },
-            },
           }}
         />
+
+        
       )}
     </>
   );

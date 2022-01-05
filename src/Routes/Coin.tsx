@@ -9,18 +9,28 @@ import {
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
-import { fetchCoinHistory, infoData, priceData } from "../Api";
-import Chart, { Ihistory } from "./Chart";
+import { infoData, priceData } from "../Api";
+import Chart from "./Chart";
 import { Button } from "react-bootstrap";
 import Show from "./Show";
 import Price from "./Price";
 
+const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+`;
+
 const Container = styled.div`
   padding: 0px 20px;
-  width: 480px;
+  max-width: 1200px;
+  height: 100vh;
   margin: 0 auto;
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
   @media screen and (max-width: 769px) {
-    max-width: 100%;
+    width: 100%;
   }
 `;
 
@@ -47,10 +57,11 @@ const OverviewItem = styled.div`
   flex-direction: column;
   align-items: center;
   span:first-child {
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 400;
     text-transform: uppercase;
     margin-bottom: 5px;
+    font-weight: 600;
   }
 `;
 const Description = styled.p`
@@ -81,6 +92,8 @@ const Tab = styled.span<{ isActive: boolean }>`
     props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
+    font-weight: 550;
+    font-size: 16px;
   }
 `;
 
@@ -180,7 +193,13 @@ const Coin = () => {
           <Button variant="info">Back</Button>
         </Link>
       </BtnContainer>
-      <Title>{state?.name || "Nothing"}</Title>
+      <Title>
+        <Img
+          alt=""
+          src={`https://cryptoicon-api.vercel.app/api/icon/${info?.symbol.toLocaleLowerCase()}`}
+        />
+        {state?.name || "Nothing"}
+      </Title>
       {infoLoding || priceLoding ? (
         <Loader>Loading...</Loader>
       ) : (
@@ -199,9 +218,7 @@ const Coin = () => {
             </OverviewItem>
           </Overview>
           <Description>
-            {info?.description
-              ? info?.description.slice(0, 200)
-              : info?.description}
+            {info?.description.substring(0,300)}
           </Description>
           <Overview>
             <OverviewItem>
@@ -232,7 +249,7 @@ const Coin = () => {
           </Tabs>
           <Routes>
             <Route path="chart" element={<Chart coinId={coinId} />} />
-            <Route path="price" element={<Price coinId={coinId}/>} />
+            <Route path="price" element={<Price coinId={coinId} />} />
             <Route path="show" element={<Show coinId={coinId} />} />
           </Routes>
         </>

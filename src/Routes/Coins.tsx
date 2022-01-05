@@ -11,7 +11,7 @@ import { isDarkAtom, ThemeEnums } from "../recoil/atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
-  max-width: 480px;
+  max-width: 1200px;
   margin: 0 auto;
   @media screen and (max-width: 769px) {
     max-width: 100%;
@@ -38,8 +38,16 @@ const Loader = styled.span`
 `;
 
 const CoinList = styled.ul`
-  margin-right: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
   list-style: none;
+  @media screen and (max-width: 1200px){
+    grid-template-columns: repeat(2,1fr);
+  }
+  @media screen and (max-width: 769px){
+    grid-template-columns: repeat(1,1fr);
+  }
 `;
 
 const Img = styled.img`

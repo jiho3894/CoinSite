@@ -8,8 +8,6 @@ import { ThemeProvider } from "styled-components";
 
 const App = ():JSX.Element => {
   const theme: ThemeEnums = useRecoilValue(isDarkAtom);
-  // recoil의 get state만 가져옵니다.
-  
   const { LIGHT } = ThemeEnums;
   return (
     <>
