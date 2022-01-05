@@ -1,8 +1,5 @@
 # https://jiho3894.github.io/CoinSite/
 
-- price 차트에 가격 정보 더 올리기
-- 유튜브 영상 없는 코인은 해당 관련 내용 논문 링크 올리기
-- 찐 무한 스크롤 구현
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

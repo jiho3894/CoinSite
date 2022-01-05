@@ -1,11 +1,13 @@
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { IoMdSunny } from 'react-icons/io';
+import { FaMoon } from 'react-icons/fa';
 import { fetchData } from "../Api";
 import { Helmet } from "react-helmet";
-import { EffectCallback, useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { isDarkAtom } from "../atoms";
+import { EffectCallback, useCallback, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { isDarkAtom, ThemeEnums } from "../recoil/atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -86,11 +88,20 @@ interface CoinInterface {
 }
 
 const Coins = () => {
-  const isDark = useRecoilValue(isDarkAtom);
-  const setDark = useSetRecoilState(isDarkAtom);
-  const setToggle = () => setDark((prev) => !prev);
+  const [theme, setTheme] = useRecoilState<ThemeEnums>(isDarkAtom);
+  const { LIGHT, DARK } = ThemeEnums;
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoin", fetchData);
   const [counter, setCounter] = useState(50);
+  const handleChangeTheme = useCallback((): void => {
+    if (theme === DARK) {
+      localStorage.setItem('theme', LIGHT);
+      setTheme(LIGHT);
+      return;
+    }
+
+    localStorage.setItem('theme', DARK);
+    setTheme(DARK);
+  }, [DARK, LIGHT, setTheme, theme]);
   const handleScroll = () => {
     const scrollHeight = document.body.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
@@ -115,8 +126,17 @@ const Coins = () => {
       </Helmet>
       <Link to="/">
         <ToggleBtnContainer>
-          <ToggleBtn onClick={setToggle}>
-            {isDark ? "라이트 모드" : "다크 모드"}
+          <ToggleBtn >
+          <div
+      className='ToggleTheme'
+      onClick={handleChangeTheme}
+    >
+      {
+        theme === LIGHT ? <FaMoon /> : <IoMdSunny />
+        // 테마가 라이트모드 / 다크모드일때마다 아이콘을 다르게 렌더링 해줍니다.
+        // 취향에 따라 아이콘을 설정해주세요 :)
+      }
+    </div>
           </ToggleBtn>
         </ToggleBtnContainer>
         <Title>나락 지름길 리스트</Title>
