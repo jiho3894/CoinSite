@@ -3,12 +3,9 @@ import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import { fetchCoinHistory } from "../Api";
 import { isDarkAtom } from "../recoil/atoms";
+import { CoinChart } from "./Coins";
 
-interface CoinChart {
-  coinId?: string;
-}
-
-interface Ihistory {
+export interface Ihistory {
   time_open: string;
   time_close: string;
   open: number;

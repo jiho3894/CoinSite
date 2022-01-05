@@ -9,10 +9,11 @@ import {
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
-import { infoData, priceData } from "../Api";
-import Chart from "./Chart";
-import Price from "./Price";
+import { fetchCoinHistory, infoData, priceData } from "../Api";
+import Chart, { Ihistory } from "./Chart";
 import { Button } from "react-bootstrap";
+import Show from "./Show";
+import Price from "./Price";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -63,9 +64,9 @@ const Loader = styled.span`
 
 const Tabs = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   margin: 25px 0px;
-  gap: 10px;
+  gap: 5px;
 `;
 
 const Tab = styled.span<{ isActive: boolean }>`
@@ -121,7 +122,7 @@ interface InfoData {
   };
 }
 
-interface PriceData {
+export interface PriceData {
   id: string;
   name: string;
   symbol: string;
@@ -160,6 +161,7 @@ const Coin = () => {
   const { state } = useLocation() as RouteState;
   const priceMatch = useMatch(`${coinId}/price`);
   const chartMatch = useMatch(`${coinId}/chart`);
+  const showMatch = useMatch(`${coinId}/show`);
   const { isLoading: infoLoding, data: info } = useQuery<InfoData>(
     ["info", coinId],
     () => infoData(coinId),
@@ -192,10 +194,6 @@ const Coin = () => {
               <span>{info?.rank}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Symbol:</span>
-              <span>{info?.symbol}</span>
-            </OverviewItem>
-            <OverviewItem>
               <span>Price:</span>
               <span>{price?.quotes.USD.price.toFixed(2)}$</span>
             </OverviewItem>
@@ -223,13 +221,19 @@ const Coin = () => {
             </Tab>
             <Tab isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`} state={{ name: state.name }}>
-                Price & YouTube
+                Price
+              </Link>
+            </Tab>
+            <Tab isActive={showMatch !== null}>
+              <Link to={`/${coinId}/show`} state={{ name: state.name }}>
+                Youtube
               </Link>
             </Tab>
           </Tabs>
           <Routes>
             <Route path="chart" element={<Chart coinId={coinId} />} />
-            <Route path="price" element={<Price coinId={coinId} />} />
+            <Route path="price" element={<Price coinId={coinId}/>} />
+            <Route path="show" element={<Show coinId={coinId} />} />
           </Routes>
         </>
       )}

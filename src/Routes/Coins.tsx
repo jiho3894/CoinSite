@@ -79,6 +79,10 @@ const ToggleBtn = styled.button`
   height: 50px;
 `;
 
+export interface CoinChart {
+  coinId?: string;
+}
+
 interface CoinInterface {
   id: string;
   name: string;
