@@ -283,7 +283,7 @@ const Coin = () => {
                 {percent24h === null ? (
                   <span style={{ color: "green" }}>
                     {isPriceUp ? "🔺 " : "🔻 "}
-                    {price?.quotes.USD.percent_change_24h}
+                    {price?.quotes.USD.percent_change_24h} %
                   </span>
                 ) : (
                   <span style={{ color: "red" }}>
@@ -307,12 +307,12 @@ const Coin = () => {
           </Overview>
           <SiteLink>
             <Site>
-              <a href={`${sourceCode}`}>
+              <a href={`${sourceCode}`} target='_blank' rel="noopener noreferrer">
                 <span>Source Code</span>
               </a>
             </Site>
             <Site>
-              <a href={`${webSite}`}>
+              <a href={`${webSite}`} target='_blank' rel="noopener noreferrer">
                 <span>Web Site</span>
               </a>
             </Site>

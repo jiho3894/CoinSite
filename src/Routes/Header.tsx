@@ -87,11 +87,11 @@ const Header = () => {
         </Link>
       </BtnContainer>
       <BtnContainer>
-        <a href="https://api.coinpaprika.com/">
+        <a href="https://api.coinpaprika.com/" target='_blank' rel="noopener noreferrer">
           <Span>A P I &nbsp; |</Span>
         </a>
       </BtnContainer>
-      <a href="https://github.com/jiho3894/CoinSite">
+      <a href="https://github.com/jiho3894/CoinSite" target='_blank' rel="noopener noreferrer">
         <GitHub />
       </a>
       <div className="ToggleTheme" onClick={handleChangeTheme}>
