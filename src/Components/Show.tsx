@@ -1,11 +1,18 @@
 import ReactPlayer from "react-player";
 import { useQuery } from "react-query";
+import styled from "styled-components";
 import { priceHistory } from "../Api";
 import { CoinChart } from "./Coins";
+
+const Site = styled.a`
+  font-size: 30px;
+  color: red;
+`;
 
 interface YoutubeKey {
   links: {
     youtube: string;
+    website?: string;
   };
 }
 
@@ -15,6 +22,7 @@ const Show = ({ coinId }: CoinChart) => {
     () => priceHistory(coinId)
   );
   const key = data?.links.youtube;
+  const webSite = data?.links.website;
   return (
     <div>
       {isLoading ? (
@@ -22,7 +30,7 @@ const Show = ({ coinId }: CoinChart) => {
       ) : (
         <div>
           {key === undefined ? (
-            "유튜브 영상이 없습니다."
+            <Site href={webSite}>Not Found Go to Website</Site>
           ) : (
             <ReactPlayer url={key} playing={true} width="inherit" height="50vh"/>
           )}

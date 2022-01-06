@@ -1,13 +1,9 @@
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { IoMdSunny } from "react-icons/io";
-import { FaMoon } from "react-icons/fa";
 import { fetchData } from "../Api";
 import { Helmet } from "react-helmet";
 import { useCallback, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { isDarkAtom, ThemeEnums } from "../recoil/atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -20,13 +16,13 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
+  font-size: 50px;
   color: ${(props) => props.theme.accentColor};
-  height: 15vh;
+  height: 220px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 500;
+  font-weight: 600;
   @media screen and (max-width: 769px) {
     font-size: 25px;
   }
@@ -39,14 +35,14 @@ const Loader = styled.span`
 
 const CoinList = styled.ul`
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   list-style: none;
-  @media screen and (max-width: 1200px){
-    grid-template-columns: repeat(2,1fr);
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
   }
-  @media screen and (max-width: 769px){
-    grid-template-columns: repeat(1,1fr);
+  @media screen and (max-width: 769px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
@@ -69,22 +65,28 @@ const Coin = styled.li`
     align-items: center;
   }
   &:hover {
+    background-color: ${(props) => props.theme.textColor};
     a {
       color: ${(props) => props.theme.accentColor};
     }
   }
 `;
 
-const ToggleBtnContainer = styled.div`
+const Top = styled.div`
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  font-weight: 700;
+  background-color: yellow;
   display: flex;
-  justify-content: flex-end;
-`;
-
-const ToggleBtn = styled.button`
-  background-color: ${(props) => props.theme.textColor};
-  color: ${(props) => props.theme.bgColor};
-  width:50px;
-  height: 50px;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: ${(props) => props.theme.accentColor};
+  cursor: pointer;
 `;
 
 export interface CoinChart {
@@ -102,20 +104,8 @@ interface CoinInterface {
 }
 
 const Coins = () => {
-  const [theme, setTheme] = useRecoilState<ThemeEnums>(isDarkAtom);
-  const { LIGHT, DARK } = ThemeEnums;
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoin", fetchData);
   const [counter, setCounter] = useState(50);
-  const handleChangeTheme = useCallback((): void => {
-    if (theme === DARK) {
-      localStorage.setItem("theme", LIGHT);
-      setTheme(LIGHT);
-      return;
-    }
-
-    localStorage.setItem("theme", DARK);
-    setTheme(DARK);
-  }, [DARK, LIGHT, setTheme, theme]);
   const handleScroll = useCallback((): void => {
     const { innerHeight } = window;
     const { scrollHeight } = document.body;
@@ -130,30 +120,22 @@ const Coins = () => {
       window.removeEventListener("scroll", handleScroll, true);
     };
   }, [handleScroll]);
+  const onClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
     <Container>
       <Helmet>
-        <title>나락의 지름길</title>
+        <title>Charley CoinSite</title>
       </Helmet>
-      <Link to="/">
-        <ToggleBtnContainer>
-          <ToggleBtn>
-            <div className="ToggleTheme" onClick={handleChangeTheme}>
-              {
-                theme === LIGHT ? <FaMoon /> : <IoMdSunny />
-              }
-            </div>
-          </ToggleBtn>
-        </ToggleBtnContainer>
-        <Title>나락 지름길 리스트</Title>
-      </Link>
+      <Title>찰리 코인</Title>
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <CoinList>
           {data?.slice(0, counter).map((coin) => (
             <Coin>
-              <Link to={`/${coin.id}`} state={{ name: coin.name }}>
+              <Link to={`/${coin.id}/chart`} state={{ name: coin.name }}>
                 <Img
                   alt=""
                   src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLocaleLowerCase()}`}
@@ -164,6 +146,7 @@ const Coins = () => {
           ))}
         </CoinList>
       )}
+      <Top onClick={onClick}>T O P</Top>
     </Container>
   );
 };

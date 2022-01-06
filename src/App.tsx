@@ -6,7 +6,7 @@ import { GlobalStyle } from "./style/GlobalStyle";
 import { Darktheme, lightTheme } from "./style/theme";
 import { ThemeProvider } from "styled-components";
 
-const App = ():JSX.Element => {
+const App = () => {
   const theme: ThemeEnums = useRecoilValue(isDarkAtom);
   const { LIGHT } = ThemeEnums;
   return (

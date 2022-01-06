@@ -11,7 +11,6 @@ import {
 import styled from "styled-components";
 import { infoData, priceData } from "../Api";
 import Chart from "./Chart";
-import { Button } from "react-bootstrap";
 import Show from "./Show";
 import Price from "./Price";
 
@@ -35,9 +34,9 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
+  font-size: 50px;
   color: ${(props) => props.theme.accentColor};
-  height: 10vh;
+  height: 220px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,22 +49,55 @@ const Overview = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 10px;
+  width: 100%;
+  margin-top: 7px;
 `;
 
 const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  line-height: 20px;
+  width: 50%;
   span:first-child {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     text-transform: uppercase;
     margin-bottom: 5px;
     font-weight: 600;
   }
+  span:last-child {
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 4px;
+  }
+  p {
+    font-size: 30px;
+    font-weight: 600;
+    color: gold;
+  }
 `;
-const Description = styled.p`
-  margin: 20px 0px;
+
+const SiteLink = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 100%;
+  height: 80px;
+  margin-top: 7px;
+  background-color: ${(props) => props.theme.accentColor};
+`;
+
+const Site = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  span {
+    font-size: 30px;
+    font-weight: 700;
+  }
 `;
 
 const Loader = styled.span`
@@ -97,9 +129,14 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
-const BtnContainer = styled.div`
+const Rank = styled.span`
+  font-size: 100px;
+`;
+
+const CoinPercent = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface RouteState {
@@ -132,6 +169,8 @@ interface InfoData {
   last_data_at: string;
   links: {
     youtube: string;
+    source_code: string;
+    website: string;
   };
 }
 
@@ -186,13 +225,14 @@ const Coin = () => {
     ["price", coinId],
     () => priceData(coinId)
   );
+  const isPriceUp = price?.quotes.USD.percent_change_24h
+    ? price?.quotes.USD.percent_change_24h > 0
+    : false;
+  const percent24h = price?.quotes.USD.percent_change_24h.toString().match("-");
+  const sourceCode = info?.links.source_code;
+  const webSite = info?.links.website;
   return (
     <Container>
-      <BtnContainer>
-        <Link to="/">
-          <Button variant="info">Back</Button>
-        </Link>
-      </BtnContainer>
       <Title>
         <Img
           alt=""
@@ -209,41 +249,63 @@ const Coin = () => {
           </Helmet>
           <Overview>
             <OverviewItem>
-              <span>Rank:</span>
-              <span>{info?.rank}</span>
+              <Rank>Rank</Rank>
+              <p>{info?.rank}</p>
             </OverviewItem>
             <OverviewItem>
-              <span>Price:</span>
-              <span>{price?.quotes.USD.price.toFixed(2)}$</span>
+              <Rank>Price</Rank>
+              <CoinPercent>
+                {percent24h === null ? (
+                  <span style={{ color: "green" }}>
+                    {isPriceUp ? "🔺 " : "🔻 "}
+                    {price?.quotes.USD.percent_change_24h}
+                  </span>
+                ) : (
+                  <span style={{ color: "red" }}>
+                    {isPriceUp ? "🔺 " : "🔻 "}
+                    {price?.quotes.USD.percent_change_24h} %
+                  </span>
+                )}
+                <span>&nbsp;{`/ ${price?.quotes.USD.price.toFixed(2)}`}$</span>
+              </CoinPercent>
             </OverviewItem>
           </Overview>
-          <Description>
-            {info?.description.substring(0,300)}
-          </Description>
           <Overview>
             <OverviewItem>
-              <span>Total Suply:</span>
+              <span>Total Suply</span>
               <span>{price?.total_supply}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Max Supply:</span>
+              <span>Max Supply</span>
               <span>{price?.max_supply}</span>
             </OverviewItem>
           </Overview>
+          <SiteLink>
+            <Site>
+              <a href={`${sourceCode}`}>
+                <span>Source Code</span>
+              </a>
+            </Site>
+            <Site>
+              <a href={`${webSite}`}>
+                <span>Web Site</span>
+              </a>
+            </Site>
+          </SiteLink>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
               <Link to={`/${coinId}/chart`} state={{ name: state.name }}>
                 Chart
               </Link>
             </Tab>
-            <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`} state={{ name: state.name }}>
-                Price
-              </Link>
-            </Tab>
             <Tab isActive={showMatch !== null}>
               <Link to={`/${coinId}/show`} state={{ name: state.name }}>
                 Youtube
+              </Link>
+            </Tab>
+            <Tab isActive={priceMatch !== null}>
+              <Link to={`/${coinId}/price`} state={{ name: state.name }}>
+                Price & Detail
               </Link>
             </Tab>
           </Tabs>
