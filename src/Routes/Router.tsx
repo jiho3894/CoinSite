@@ -6,7 +6,7 @@ import Header from "./Header";
 
 const Router = () => {
   return (
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <Header/>
       <Routes>
         <Route path="/" element={<Coins />} />
