@@ -9,10 +9,10 @@ const { DARK, LIGHT } = ThemeEnums;
 
 export const getTheme = (): ThemeEnums => {
   const theme = localStorage.getItem("theme");
-  if (theme === DARK) {
-    return DARK;
+  if (theme === LIGHT) {
+    return LIGHT;
   }
-  return LIGHT;
+  return DARK;
 };
 
 export const isDarkAtom = atom<ThemeEnums>({

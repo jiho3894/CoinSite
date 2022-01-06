@@ -61,6 +61,7 @@ const OverviewItem = styled.div`
   width: 50%;
   span:first-child {
     font-size: 18px;
+    line-height: 18px;
     font-weight: 500;
     text-transform: uppercase;
     margin-bottom: 5px;
@@ -75,6 +76,19 @@ const OverviewItem = styled.div`
     font-size: 30px;
     font-weight: 600;
     color: gold;
+  }
+  @media screen and (max-width: 769px) {
+    span:first-child {
+      font-size: 15px;
+    }
+    span:last-child {
+      font-size: 13px;
+    }
+    p {
+      font-size: 18px;
+      font-weight: 600;
+      color: gold;
+    }
   }
 `;
 
@@ -97,6 +111,11 @@ const Site = styled.div`
   span {
     font-size: 30px;
     font-weight: 700;
+  }
+  @media screen and (max-width: 769px) {
+    span {
+      font-size: 20px;
+    }
   }
 `;
 
@@ -127,16 +146,22 @@ const Tab = styled.span<{ isActive: boolean }>`
     font-weight: 550;
     font-size: 16px;
   }
-`;
-
-const Rank = styled.span`
-  font-size: 100px;
+  @media screen and (max-width: 769px) {
+    a {
+      font-size: 13px;
+    }
+  }
 `;
 
 const CoinPercent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 769px) {
+    span:first-child {
+      font-size: 12px;
+    }
+  }
 `;
 
 interface RouteState {
@@ -249,11 +274,11 @@ const Coin = () => {
           </Helmet>
           <Overview>
             <OverviewItem>
-              <Rank>Rank</Rank>
+              <span>Rank</span>
               <p>{info?.rank}</p>
             </OverviewItem>
             <OverviewItem>
-              <Rank>Price</Rank>
+              <span>Price</span>
               <CoinPercent>
                 {percent24h === null ? (
                   <span style={{ color: "green" }}>

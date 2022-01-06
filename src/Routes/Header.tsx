@@ -14,7 +14,7 @@ const ToggleBtnContainer = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  background-color: ${props => props.theme.op};
+  background-color: ${(props) => props.theme.op};
 `;
 
 const ToggleBtn = styled.button`
@@ -23,6 +23,10 @@ const ToggleBtn = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 100%;
+  @media screen and (max-width: 769px) {
+    width: 35px;
+    height: 35px;
+  }
 `;
 
 const BtnContainer = styled.div`
@@ -30,6 +34,10 @@ const BtnContainer = styled.div`
   justify-content: flex-end;
   margin-right: 15px;
   margin-left: 5px;
+  @media screen and (max-width: 769px) {
+    margin-right: 10px;
+    margin-left: 3px;
+  }
 `;
 
 const GitHub = styled.button`
@@ -43,11 +51,19 @@ const GitHub = styled.button`
   background-size: contain;
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/4/4a/GitHub_Mark.png");
   margin: 20px;
+  @media screen and (max-width: 769px) {
+    width: 35px;
+    height: 35px;
+    margin: 10px;
+  }
 `;
 
 const Span = styled.span`
   font-weight: 700;
   font-size: 20px;
+  @media screen and (max-width: 769px) {
+    font-size: 12px;
+  }
 `;
 
 const Header = () => {

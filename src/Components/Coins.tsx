@@ -25,6 +25,7 @@ const Title = styled.h1`
   font-weight: 600;
   @media screen and (max-width: 769px) {
     font-size: 25px;
+    height: 180px;
   }
 `;
 
@@ -87,6 +88,11 @@ const Top = styled.div`
   font-size: 20px;
   color: ${(props) => props.theme.accentColor};
   cursor: pointer;
+  @media screen and (max-width: 769px) {
+    width: 40px;
+    height: 40px;
+    font-size: 12px;
+  }
 `;
 
 export interface CoinChart {
