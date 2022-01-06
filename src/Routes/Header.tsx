@@ -91,7 +91,7 @@ const Header = () => {
           <Span>A P I &nbsp; |</Span>
         </a>
       </BtnContainer>
-      <a href="https://github.com/jiho3894/CoinSite" target='_blank' rel="noopener noreferrer">
+      <a href="https://github.com/jiho3894/CoinSite">
         <GitHub />
       </a>
       <div className="ToggleTheme" onClick={handleChangeTheme}>
