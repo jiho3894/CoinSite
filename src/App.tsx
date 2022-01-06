@@ -8,10 +8,10 @@ import { ThemeProvider } from "styled-components";
 
 const App = () => {
   const theme: ThemeEnums = useRecoilValue(isDarkAtom);
-  const { LIGHT } = ThemeEnums;
+  const { DARK } = ThemeEnums;
   return (
     <>
-      <ThemeProvider theme={theme === LIGHT ? Darktheme : lightTheme}>
+      <ThemeProvider theme={theme === DARK ? Darktheme : lightTheme}>
         <GlobalStyle />
         <Router />
       </ThemeProvider>
