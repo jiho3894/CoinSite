@@ -64,19 +64,17 @@ const Chart = ({ coinId }: CoinChart) => {
             },
             xaxis: {
               type: "datetime",
-              labels : {
-                style : {
-                  colors : isDark === "0" ? "white" : "black"
-                }
-              }
+              labels: {
+                style: {
+                  colors: isDark === "0" ? "white" : "black",
+                },
+              },
             },
             yaxis: {
               show: false,
             },
           }}
         />
-
-        
       )}
     </>
   );

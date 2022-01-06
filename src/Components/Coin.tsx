@@ -235,6 +235,7 @@ export interface PriceData {
 
 const Coin = () => {
   const { coinId } = useParams();
+  console.log(coinId);
   const { state } = useLocation() as RouteState;
   const priceMatch = useMatch(`${coinId}/price`);
   const chartMatch = useMatch(`${coinId}/chart`);
@@ -307,13 +308,17 @@ const Coin = () => {
           </Overview>
           <SiteLink>
             <Site>
-              <a href={`${sourceCode}`} target='_blank' rel="noopener noreferrer">
+              <a
+                href={`${sourceCode}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span>Source Code</span>
               </a>
             </Site>
             <Site>
-              <a href={`${webSite}`} target='_blank' rel="noopener noreferrer">
-                <span>Web Site</span>
+              <a href={`${webSite}`} target="_blank" rel="noopener noreferrer">
+                <span>WebSite</span>
               </a>
             </Site>
           </SiteLink>

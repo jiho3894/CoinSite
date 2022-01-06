@@ -1,4 +1,3 @@
-import React from "react";
 import Router from "./Routes/Router";
 import { useRecoilValue } from "recoil";
 import { isDarkAtom, ThemeEnums } from "./recoil/atoms";
@@ -17,6 +16,6 @@ const App = () => {
       </ThemeProvider>
     </>
   );
-}
+};
 
 export default App;

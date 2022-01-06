@@ -75,7 +75,6 @@ const Header = () => {
       setTheme(LIGHT);
       return;
     }
-
     localStorage.setItem("theme", DARK);
     setTheme(DARK);
   }, [DARK, LIGHT, setTheme, theme]);
@@ -87,7 +86,11 @@ const Header = () => {
         </Link>
       </BtnContainer>
       <BtnContainer>
-        <a href="https://api.coinpaprika.com/" target='_blank' rel="noopener noreferrer">
+        <a
+          href="https://api.coinpaprika.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Span>A P I &nbsp; |</Span>
         </a>
       </BtnContainer>

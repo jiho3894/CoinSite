@@ -58,9 +58,7 @@ const Price = ({ coinId }: CoinChart) => {
         <Container>
           <Overview>
             <OverviewItem>
-              <Span>
-                Live Price : {setData?.price.toFixed(2)}$
-              </Span>
+              <Span>Live Price : {setData?.price.toFixed(2)}$</Span>
             </OverviewItem>
           </Overview>
           <Overview>
@@ -80,11 +78,11 @@ const Price = ({ coinId }: CoinChart) => {
             <OverviewItem>
               {percent24h === null ? (
                 <span style={{ color: "green" }}>
-                  Change 24 h : {setData?.percent_change_24h}%
+                  Change 24 Hour : {setData?.percent_change_24h}%
                 </span>
               ) : (
                 <span style={{ color: "red" }}>
-                  Change 24 h : {setData?.percent_change_24h}%
+                  Change 24 Hour : {setData?.percent_change_24h}%
                 </span>
               )}
             </OverviewItem>
@@ -130,9 +128,7 @@ const Price = ({ coinId }: CoinChart) => {
           </Overview>
           <Overview>
             <OverviewItem>
-              <Span>
-                Best Price : {setData?.ath_price.toFixed(2)}$
-              </Span>
+              <Span>Best Price : {setData?.ath_price.toFixed(2)}$</Span>
             </OverviewItem>
           </Overview>
           <Overview>

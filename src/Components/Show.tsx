@@ -30,9 +30,16 @@ const Show = ({ coinId }: CoinChart) => {
       ) : (
         <div>
           {key === undefined ? (
-            <Site href={webSite} target='_blank' rel="noopener noreferrer">Not Found Go to Website</Site>
+            <Site href={webSite} target="_blank" rel="noopener noreferrer">
+              Not Found Go to Website
+            </Site>
           ) : (
-            <ReactPlayer url={key} playing={true} width="inherit" height="50vh"/>
+            <ReactPlayer
+              url={key}
+              playing={true}
+              width="inherit"
+              height="50vh"
+            />
           )}
         </div>
       )}

@@ -18,7 +18,7 @@ const Container = styled.div`
 const Title = styled.h1`
   font-size: 50px;
   color: ${(props) => props.theme.accentColor};
-  height: 220px;
+  height: 230px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,7 +112,7 @@ interface CoinInterface {
 const Coins = () => {
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoin", fetchData);
   const [counter, setCounter] = useState(50);
-  const handleScroll = useCallback((): void => {
+  const handleScroll = useCallback(() => {
     const { innerHeight } = window;
     const { scrollHeight } = document.body;
     const { scrollTop } = document.documentElement;
