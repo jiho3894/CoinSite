@@ -1,11 +1,11 @@
 import { atom } from "recoil";
 
 export enum ThemeEnums {
-  LIGHT = "0",
-  DARK = "1",
+  DARK = "0",
+  LIGHT = "1",
 }
 
-const { LIGHT, DARK } = ThemeEnums;
+const { DARK, LIGHT } = ThemeEnums;
 
 export const getTheme = (): ThemeEnums => {
   const theme = localStorage.getItem("theme");
