@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { fetchData } from "../Api";
 import { Helmet } from "react-helmet";
 import { useCallback, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -34,7 +35,7 @@ const Loader = styled.span`
   display: block;
 `;
 
-const CoinList = styled.ul`
+const CoinList = styled(motion.ul)`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
@@ -53,7 +54,7 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-const Coin = styled.li`
+const Coin = styled(motion.li)`
   background-color: ${(props) => props.theme.cardBgColor};
   color: ${(props) => props.theme.textColor};
   border-radius: 15px;
@@ -109,6 +110,23 @@ interface CoinInterface {
   type: string;
 }
 
+const container = {
+  visible: {
+    transition: {
+      delayChildren: 0.05,
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+};
+
 const Coins = () => {
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoin", fetchData);
   const [counter, setCounter] = useState(50);
@@ -138,9 +156,9 @@ const Coins = () => {
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
-        <CoinList>
-          {data?.slice(0, counter).map((coin) => (
-            <Coin>
+        <CoinList variants={container} initial="hidden" animate="visible">
+          {data?.slice(0, counter).map((coin, index) => (
+            <Coin key={index} variants={item}>
               <Link to={`/${coin.id}/chart`} state={{ name: coin.name }}>
                 <Img
                   alt=""
