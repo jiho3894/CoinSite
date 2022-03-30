@@ -162,7 +162,7 @@ const Coins = () => {
               <Link to={`/${coin.id}/chart`} state={{ name: coin.name }}>
                 <Img
                   alt=""
-                  src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLocaleLowerCase()}`}
+                  src={`https://cryptocurrencyliveprices.com/img/${coin.id}.png`}
                 />
                 {coin.id} &rarr;
               </Link>
