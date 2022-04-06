@@ -22,7 +22,6 @@ const Chart = ({ coinId }: CoinChart) => {
     ["coinHistory", coinId],
     () => fetchCoinHistory(coinId)
   );
-  console.log(isDark);
   return (
     <>
       {isLoading ? (
@@ -34,7 +33,7 @@ const Chart = ({ coinId }: CoinChart) => {
             {
               name: "Price",
               data: data?.map((price) => ({
-                x: price.time_close,
+                x: price.time_open,
                 y: [price.open, price.high, price.low, price.close],
               })),
             },
@@ -45,7 +44,7 @@ const Chart = ({ coinId }: CoinChart) => {
             },
             chart: {
               type: "candlestick",
-              height: 900,
+              height: 200,
               background: "transparent",
               foreColor: isDark ? "white" : "black",
               animations: {
@@ -71,7 +70,18 @@ const Chart = ({ coinId }: CoinChart) => {
               },
             },
             yaxis: {
-              show: false,
+              tooltip: {
+                enabled: true,
+              },
+              tickAmount: 6,
+              labels: {
+                style: {
+                  colors: isDark === "0" ? "white" : "black",
+                },
+                formatter: (val) => {
+                  return val.toFixed(2);
+                },
+              },
             },
           }}
         />

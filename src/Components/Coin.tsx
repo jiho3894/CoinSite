@@ -15,9 +15,9 @@ import Show from "./Show";
 import Price from "./Price";
 
 const Img = styled.img`
-  width: 35px;
-  height: 35px;
-  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
 `;
 
 const Container = styled.div`
@@ -235,7 +235,6 @@ export interface PriceData {
 
 const Coin = () => {
   const { coinId } = useParams();
-  console.log(coinId);
   const { state } = useLocation() as RouteState;
   const priceMatch = useMatch(`${coinId}/price`);
   const chartMatch = useMatch(`${coinId}/chart`);

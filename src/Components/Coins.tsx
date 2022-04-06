@@ -68,6 +68,7 @@ const Coin = styled(motion.li)`
   }
   &:hover {
     background-color: ${(props) => props.theme.textColor};
+    font-weight: 600;
     a {
       color: ${(props) => props.theme.accentColor};
     }
@@ -78,11 +79,11 @@ const Top = styled.div`
   position: fixed;
   right: 30px;
   bottom: 30px;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 100%;
   font-weight: 700;
-  background-color: yellow;
+  background-color: ${(props) => props.theme.bgColor};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,6 +94,12 @@ const Top = styled.div`
     width: 40px;
     height: 40px;
     font-size: 12px;
+  }
+  &:hover {
+    svg {
+      transform: translateY(-5px);
+      transition: all 0.1s;
+    }
   }
 `;
 
@@ -152,7 +159,7 @@ const Coins = () => {
       <Helmet>
         <title>Charley CoinSite</title>
       </Helmet>
-      <Title>찰리 코인</Title>
+      <Title>Charley Coin</Title>
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
@@ -170,7 +177,22 @@ const Coins = () => {
           ))}
         </CoinList>
       )}
-      <Top onClick={onClick}>T O P</Top>
+      <Top onClick={onClick}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M5 11l7-7 7 7M5 19l7-7 7 7"
+          />
+        </svg>
+      </Top>
     </Container>
   );
 };

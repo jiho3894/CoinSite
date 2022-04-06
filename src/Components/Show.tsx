@@ -39,6 +39,7 @@ const Show = ({ coinId }: CoinChart) => {
               playing={true}
               width="inherit"
               height="50vh"
+              volume={0.1}
             />
           )}
         </div>

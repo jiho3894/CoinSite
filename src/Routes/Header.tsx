@@ -1,27 +1,51 @@
 import { useCallback } from "react";
 import { FaMoon } from "react-icons/fa";
 import { IoMdSunny } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { isDarkAtom, ThemeEnums } from "../recoil/atoms";
 
 const ToggleBtnContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 80px;
   position: fixed;
   top: 0;
   right: 0;
   background-color: ${(props) => props.theme.op};
 `;
 
+const FlexStart = styled.div`
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+`;
+
+const FlexEnd = styled.div`
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const Back = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  stroke-width: 2px;
+  stroke-linecap: round;
+`;
+
 const ToggleBtn = styled.button`
   background-color: ${(props) => props.theme.textColor};
   color: ${(props) => props.theme.bgColor};
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   @media screen and (max-width: 769px) {
     width: 35px;
@@ -29,20 +53,9 @@ const ToggleBtn = styled.button`
   }
 `;
 
-const BtnContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 15px;
-  margin-left: 5px;
-  @media screen and (max-width: 769px) {
-    margin-right: 10px;
-    margin-left: 3px;
-  }
-`;
-
 const GitHub = styled.button`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 30px;
   border: 0;
   cursor: pointer;
@@ -58,15 +71,8 @@ const GitHub = styled.button`
   }
 `;
 
-const Span = styled.span`
-  font-weight: 700;
-  font-size: 20px;
-  @media screen and (max-width: 769px) {
-    font-size: 12px;
-  }
-`;
-
 const Header = () => {
+  const location = useLocation();
   const [theme, setTheme] = useRecoilState<ThemeEnums>(isDarkAtom);
   const { LIGHT, DARK } = ThemeEnums;
   const handleChangeTheme = useCallback((): void => {
@@ -80,26 +86,31 @@ const Header = () => {
   }, [DARK, LIGHT, setTheme, theme]);
   return (
     <ToggleBtnContainer>
-      <BtnContainer>
-        <Link to="/">
-          <Span>H O M E &nbsp; |</Span>
-        </Link>
-      </BtnContainer>
-      <BtnContainer>
-        <a
-          href="https://api.coinpaprika.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Span>A P I &nbsp; |</Span>
+      <FlexStart>
+        <a href="https://github.com/jiho3894/CoinSite">
+          <GitHub />
         </a>
-      </BtnContainer>
-      <a href="https://github.com/jiho3894/CoinSite">
-        <GitHub />
-      </a>
-      <div className="ToggleTheme" onClick={handleChangeTheme}>
-        <ToggleBtn>{theme === LIGHT ? <FaMoon /> : <IoMdSunny />}</ToggleBtn>
-      </div>
+        <div className="ToggleTheme" onClick={handleChangeTheme}>
+          <ToggleBtn>{theme === LIGHT ? <FaMoon /> : <IoMdSunny />}</ToggleBtn>
+        </div>
+      </FlexStart>
+      <FlexEnd>
+        {location.pathname.length !== 1 ? (
+          <Link to="/">
+            <Back>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </Back>
+          </Link>
+        ) : null}
+      </FlexEnd>
     </ToggleBtnContainer>
   );
 };

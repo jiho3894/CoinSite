@@ -8,6 +8,15 @@ ${reset}
     box-sizing: border-box;
     margin:0;
     border:0;
+    &::-webkit-scrollbar {
+    width: 8px;
+    height: 5px;
+    border-radius: 50px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(#6c5ce7, #00cec9);
+    border-radius: 50px;
+  }
   }
   body {
     font-family: 'Source Sans Pro', sans-serif;
