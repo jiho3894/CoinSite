@@ -20,7 +20,7 @@ const ToggleBtnContainer = styled.div`
 
 const FlexStart = styled.div`
   width: 100%;
-  height: 80px;
+  height: 55px;
   display: flex;
   align-items: center;
 `;
@@ -84,12 +84,13 @@ const Header = () => {
     localStorage.setItem("theme", DARK);
     setTheme(DARK);
   }, [DARK, LIGHT, setTheme, theme]);
+  const goLink = () => {
+    window.location.href = "https://github.com/jiho3894/CoinSite";
+  };
   return (
     <ToggleBtnContainer>
       <FlexStart>
-        <a href="https://github.com/jiho3894/CoinSite">
-          <GitHub />
-        </a>
+        <GitHub onClick={goLink} />
         <div className="ToggleTheme" onClick={handleChangeTheme}>
           <ToggleBtn>{theme === LIGHT ? <FaMoon /> : <IoMdSunny />}</ToggleBtn>
         </div>
