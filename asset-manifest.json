@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/CoinSite/static/css/main.434d85ca.css",
-    "main.js": "/CoinSite/static/js/main.0edbfa27.js",
+    "main.js": "/CoinSite/static/js/main.bf508945.js",
     "index.html": "/CoinSite/index.html",
     "main.434d85ca.css.map": "/CoinSite/static/css/main.434d85ca.css.map",
-    "main.0edbfa27.js.map": "/CoinSite/static/js/main.0edbfa27.js.map"
+    "main.bf508945.js.map": "/CoinSite/static/js/main.bf508945.js.map"
   },
   "entrypoints": [
     "static/css/main.434d85ca.css",
-    "static/js/main.0edbfa27.js"
+    "static/js/main.bf508945.js"
   ]
 }
