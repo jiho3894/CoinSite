@@ -79,8 +79,8 @@ const Top = styled.div`
   position: fixed;
   right: 30px;
   bottom: 30px;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   font-weight: 700;
   background-color: ${(props) => props.theme.bgColor};
@@ -91,8 +91,8 @@ const Top = styled.div`
   color: ${(props) => props.theme.accentColor};
   cursor: pointer;
   @media screen and (max-width: 769px) {
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     font-size: 12px;
   }
   &:hover {
