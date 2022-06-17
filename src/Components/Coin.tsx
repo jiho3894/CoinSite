@@ -259,10 +259,12 @@ const Coin = () => {
   return (
     <Container>
       <Title>
-        <Img
-          alt=""
-          src={`https://cryptocurrencyliveprices.com/img/${info?.id}.png`}
-        />
+        {info && (
+          <Img
+            alt=""
+            src={`https://cryptocurrencyliveprices.com/img/${info?.id}.png`}
+          />
+        )}
         {state?.name || "Nothing"}
       </Title>
       {infoLoding || priceLoding ? (
