@@ -20,7 +20,10 @@ const Chart = ({ coinId }: CoinChart) => {
   const isDark = useRecoilValue(isDarkAtom);
   const { isLoading, data } = useQuery<Ihistory[]>(
     ["coinHistory", coinId],
-    () => fetchCoinHistory(coinId)
+    () => fetchCoinHistory(coinId),
+    {
+      refetchInterval: 3000,
+    }
   );
   return (
     <>
@@ -32,10 +35,11 @@ const Chart = ({ coinId }: CoinChart) => {
           series={[
             {
               name: "Price",
-              data: data?.map((price) => ({
-                x: price.time_open,
-                y: [price.open, price.high, price.low, price.close],
-              })),
+              data:
+                data?.map((price) => ({
+                  x: price.time_open,
+                  y: [price.open, price.high, price.low, price.close],
+                })) ?? [],
             },
           ]}
           options={{
